@@ -1,0 +1,42 @@
+name: Build and deploy
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - development
+    paths-ignore:
+      - '.gitignore'
+      - '.github/**'
+      - '.vscode/**'
+      - '.editorconfig'
+      - 'LICENSE'
+      - '**.md'
+      - 'docs/**'
+  pull_request:
+    branches:
+      - development
+    paths-ignore:
+      - '.gitignore'
+      - '.github/**'
+      - '.vscode/**'
+      - '.editorconfig'
+      - 'LICENSE'
+      - '**.md'
+      - 'docs/**'
+
+jobs:
+
+  build:
+
+    name: Build TODO
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+
+      - name: ls
+        run: ls
