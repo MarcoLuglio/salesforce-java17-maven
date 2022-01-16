@@ -19,7 +19,7 @@ Reads platform events form saleforce using Java 17.
 * Kubernetes ([in docker](https://docs.docker.com/desktop/kubernetes/), [minikube](https://minikube.sigs.k8s.io/docs/start/), [minishift](https://docs.okd.io/3.11/minishift/getting-started/installing.html), [codeready containers](https://github.com/code-ready/crc)…) or a [free OpenShift developer account](https://developers.redhat.com/developer-sandbox)
 
 
-# Maven Config
+# Maven config
 
 Additional Maven parameters can be used in the GitHub pipeline by including them in the settings.xml file. Proxy authentication for instance can be put there.
 
