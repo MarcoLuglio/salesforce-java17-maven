@@ -1,0 +1,35 @@
+<settings>
+
+	<proxies>
+
+		<proxy>
+			<id>optional1</id>
+			<active>true</active>
+			<protocol>http</protocol>
+			<host>TODO</host>
+			<port>8080</port>
+			<nonProxyHosts>localhost|*.mydomain.com</nonProxyHosts>
+		</proxy>
+
+		<proxy>
+			<id>optional1</id>
+			<active>true</active>
+			<protocol>https</protocol>
+			<host>TODO</host>
+			<port>8080</port>
+			<nonProxyHosts>localhost|*.mydomain.com</nonProxyHosts>
+		</proxy>
+
+	</proxies>
+
+	<servers>
+
+		<server>
+			<id>central</id>
+			<username>replacedByThePipelineUsername</username>
+			<password>replacedByThePipelinePassword</password>
+		</server>
+
+	</servers>
+
+</settings>
