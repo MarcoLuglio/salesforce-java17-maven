@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: order change
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: order change
+  strategy:
+    type: Rolling
+  template:
+    metadata:
+      labels:
+        app: order change
+    spec:
+      containers:
+      - name: salesforce java
+        image: docker.io/marcodejulho/kubernetes-salesforce-java
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        args:
+          - -cpus
+          - "2"
+        # ports:
+        # - containerPort: <Port>
+        env:
+          - name: a
+            value: a
+        startupProbe:
+          exec:
+            command:
+              - curl
+              - '--request GET'
+              - 'https://test.salesforce.com'
+          periodSeconds: 600
+          successThreshold: 1
+          timeoutSeconds: 60
+        livenessProbe:
+          exec:
+            command:
+              - curl
+              - '--request GET'
+              - 'https://test.salesforce.com'
+          failureThreshold: 3
+          initialDelaySeconds: 60
+          periodSeconds: 600
+          successThreshold: 1
+          timeoutSeconds: 60
