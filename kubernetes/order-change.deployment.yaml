@@ -27,8 +27,8 @@ spec:
         # ports:
         # - containerPort: <Port>
         env:
-          - name: a
-            value: a
+          - name: VAR1
+            value: value1
         startupProbe:
           exec:
             command:

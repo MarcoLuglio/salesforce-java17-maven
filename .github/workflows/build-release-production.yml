@@ -38,5 +38,12 @@ jobs:
 
     steps:
 
-      - name: ls
-        run: ls
+      - name: echo a
+        run: echo a
+
+      # change the artifactId and version in pom.xml and create a tag
+      # or maybe just trigger this pipeline when creating a tag?
+      # then pass thesh two information pieces to docker build
+
+      - name: docker build .
+        run: docker build .
