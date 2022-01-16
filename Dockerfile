@@ -6,14 +6,26 @@
 FROM maven:3-openjdk-17 as builder
 LABEL maintainer = "Marco Luglio <marcodejulho@gmail.com>"
 
-COPY . /usr/src/orderchange/
+# pass a value for this argument with
+# docker build --build-arg arg1=myvalue .
+# ARG is discarded after build
+ARG ARG1=value2
 
-# default image workdir is /usr/src/myapp
-WORKDIR /usr/src/orderchange/
+# overwrite this value with
+# docker run ... -e MAVEN_CONFIG=/var/maven/.m2
+# ENV is persisted after build
+# ENV ARG1=${ARG1:-myValue}
+ENV VAR1 value1
+ENV VAR2 "$ARG1"
 
 # get secrets passed from docker build --secret id=mavenSecrets,src=mavenSecrets.txt .
 # we can check the contents with cat /run/secrets/mavenSecrets
 RUN --mount=type=secret,id=mavenSecrets
+
+COPY . /usr/src/orderchange/
+
+# default image workdir is /usr/src/myapp
+WORKDIR /usr/src/orderchange/
 
 # add authentication form environment varibles
 RUN sed -i 's/replacedByThePipelineUsername/${{ secrets.nexusUsername }}/g' settings.xml
@@ -30,17 +42,12 @@ RUN mvn -B package -s settings.xml
 # https://hub.docker.com/_/openjdk
 FROM openjdk:17.0.1
 
-COPY --from=builder /usr/src/orderchange/target/release/container_azure_rust /bin/main
-# probably not the correct place to put these
-# COPY --from=builder /usr/src/main/hello.json /bin/hello.json
+COPY --from=builder /usr/src/orderchange/target/salesforce-java17-maven-1.0.jar /bin/main.jar
 
 # user execute /bin/main
-# user read /bin/hello.json and /bin/404.html
-RUN chmod u+x /bin/main \
-	&& chmod u+r /bin/hello.json \
-	&& chmod u+r /bin/404.html
+RUN chmod u+x /bin/main.jar
 
 WORKDIR /bin
-EXPOSE 80
-ENTRYPOINT [ "/bin/main" ]
-CMD ["java", "-jar", "a.jar"]
+# EXPOSE 80
+ENTRYPOINT ["java", "-jar"]
+CMD ["/bin/main.jar"]
