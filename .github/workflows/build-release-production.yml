@@ -44,6 +44,7 @@ jobs:
       # change the artifactId and version in pom.xml and create a tag
       # or maybe just trigger this pipeline when creating a tag?
       # then pass thesh two information pieces to docker build
+      # should I publish a release also?
 
       - name: docker build .
         run: docker build .
